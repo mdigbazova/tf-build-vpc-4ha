@@ -22,7 +22,7 @@ locals {
     SYSTEM                = "DigiToll"
     OWNER                 = "HyperAspect"
     ENV_NAME              = "${var.environment}"
-    DESCRIPTION           = "Key to encrypt and decrypt secret parameters in the project DigiToll"
+    DESCRIPTION           = "Lambda functions for project DigiToll, if is needed"
     MANAGED_BY            = "Terraform"
   }
 }

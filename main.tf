@@ -12,9 +12,8 @@ provider "aws" {
 # ------------------------------------------------------------------------------
 
 resource "aws_vpc" "environment-test-3" {
-  //cidr_block           = "10.0.0.0/16"
   cidr_block           = "172.31.0.0/16"
-  //instance_tenancy     = "dedicated"
+  instance_tenancy     = "default"
   enable_dns_hostnames = true
   enable_dns_support   = true
   tags = {
@@ -67,7 +66,7 @@ resource "aws_security_group" "subnetsecurity" {
 
 
 # ------------------------------------------------------------------------------
-# Locals
+# LOCALS
 # ------------------------------------------------------------------------------
 
 locals {
@@ -114,6 +113,9 @@ locals {
 //  }
 //}
 
+# ------------------------------------------------------------------------------
+# CREATE THE KMS KEY
+# ------------------------------------------------------------------------------
 
 resource "aws_kms_key" "key" {
   key_usage               = "ENCRYPT_DECRYPT"
@@ -131,8 +133,24 @@ resource "aws_kms_alias" "key_alias" {
 }
 
 
+////---------
+//// if we like to use modules --> to call them in here
+//// modules are not called till now!!!
+//module "lambda" {
+//  source                        = "./modules/lambda"
+//  environment                   = "${var.environment}"
+//  region                        = "${var.region}"
+//  lambda-function-name          = "digitoll-lambda"
+//  lambda-function-handler-class = "" //"com.solarwinds.davinci.kea.echo.Handler"
+//  lambda-payload-filename       = "" //"../../../../kea-echo/target/kea-echo-0.0.0-SNAPSHOT.jar"
+//  kinesis-stream-arn            = "" //"arn:aws:kinesis:eu-west-1:194345365675:stream/webmon_data"
+//  lambda-kinesis-enabled        = "false"
+//  lambda-function-description   = ""//"Adapts Echo events populated by the Bravo Loader API from the Kinesis stream to EventBus."
+//}
+//
+//module cmk_key:...
 
-//---------
+////---------
 // if we like to create a new VPC and add additional resources
 //resource "aws_vpc" "environment-test-1" {
 //  //cidr_block           = "10.0.0.0/16"
