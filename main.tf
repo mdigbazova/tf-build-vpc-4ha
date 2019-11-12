@@ -2,7 +2,7 @@ provider "aws" {
   region              = "${var.region}"
   //version             = "~> 2.34"
   allowed_account_ids = [
-  //  "070710213444"
+    "070710213444",
     "393305049144"
   ]
 }
@@ -108,7 +108,7 @@ locals {
 //terraform {
 //  backend "s3" {
 //    bucket          = "mery-test-terraform-state"
-//    key             = "davinci-kea/echo"
+//    key             = "digitoll/encr/decr"
 //    region          = "${var.region}"
 //    encrypt         = "true"
 //  }
