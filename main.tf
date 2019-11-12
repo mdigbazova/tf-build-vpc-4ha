@@ -1,20 +1,20 @@
-//variable "region" {}
-//variable "environment" {}
-
 provider "aws" {
   region              = "${var.region}"
-  version             = "~> 2.34"
+  //version             = "~> 2.34"
   allowed_account_ids = [
-    "070710213444"
-//    "393305049144"
+  //  "070710213444"
+    "393305049144"
   ]
 }
 
-// if we like to create a new VPC and add additional resources
+# ------------------------------------------------------------------------------
+# CREATE THE VPC ITSELF
+# ------------------------------------------------------------------------------
+
 resource "aws_vpc" "environment-test-3" {
   //cidr_block           = "10.0.0.0/16"
   cidr_block           = "172.31.0.0/16"
-  instance_tenancy     = "dedicated"
+  //instance_tenancy     = "dedicated"
   enable_dns_hostnames = true
   enable_dns_support   = true
   tags = {
@@ -22,17 +22,6 @@ resource "aws_vpc" "environment-test-3" {
   }
 }
 
-
-// trying to import a VPC
-//resource "aws_vpc" "test_vpc" {
-//  cidr_block  = "172.31.0.0/16"
-//  instance_tenancy = "dedicated"
-//  tags        = {
-//    Name      = "imported_test_vpc"
-//  }
-//}
-
-//vpc_name = "terraform-aws-vpc-test-2"
 
 # ------------------------------------------------------------------------------
 # CREATE THE VPC SUBNETS
@@ -82,49 +71,38 @@ resource "aws_security_group" "subnetsecurity" {
 # ------------------------------------------------------------------------------
 
 locals {
-  vpc_name = "terraform-aws-vpc-test-2"
   tags = {
-    SYSTEM                = "Mery"
-    OWNER                 = "Mery"
+    SYSTEM                = "DigiToll"
+    OWNER                 = "HyperAspect"
     //ENV_NAME              = "${var.environment}"
-    DESCRIPTION           = "Resorces for VPC creation"
+    DESCRIPTION           = "VPC creation"
     MANAGED_BY            = "Terraform"
   }
 }
-
-//locals {
-//  tags = {
-//    SYSTEM                = "DigiToll"
-//    OWNER                 = "HyperAspect"
-//    ENV_NAME              = "${var.environment}"
-//    DESCRIPTION           = "Key to encrypt and decrypt secret parameters in the project DigiToll"
-//    MANAGED_BY            = "Terraform"
-//  }
-//}
 
 
 # ------------------------------------------------------------------------------
 # CREATE THE S3 BUCKET
 # ------------------------------------------------------------------------------
-
-resource "aws_s3_bucket" "mery_terraform_state" {
-  bucket = "mery-test-terraform-state"
-
-  # Enable versioning so we can see the full revision history of our
-  # state files
-  versioning {
-    enabled = true
-  }
-
-  # Enable server-side encryption by default
-  server_side_encryption_configuration {
-    rule {
-      apply_server_side_encryption_by_default {
-        sse_algorithm = "AES256"
-      }
-    }
-  }
-}
+//// commented as I don't know whether it is needed:
+//resource "aws_s3_bucket" "mery_terraform_state" {
+//  bucket = "mery-test-terraform-state"
+//
+//  # Enable versioning so we can see the full revision history of our
+//  # state files
+//  versioning {
+//    enabled = true
+//  }
+//
+//  # Enable server-side encryption by default
+//  server_side_encryption_configuration {
+//    rule {
+//      apply_server_side_encryption_by_default {
+//        sse_algorithm = "AES256"
+//      }
+//    }
+//  }
+//}
 
 
 //terraform {

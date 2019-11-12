@@ -17,29 +17,31 @@ data "aws_iam_policy_document" "lambda-role-policy" {
   }
 }
 
-//locals {
-//  tags = {
-//    SYSTEM = "DigiToll"
-//    OWNER = "Mery"
-//    //ENV_NAME = "${var.environment}"
-//  }
-//}
+locals {
+  tags = {
+    SYSTEM                = "DigiToll"
+    OWNER                 = "HyperAspect"
+    ENV_NAME              = "${var.environment}"
+    DESCRIPTION           = "Key to encrypt and decrypt secret parameters in the project DigiToll"
+    MANAGED_BY            = "Terraform"
+  }
+}
 
-//resource "aws_iam_role_policy_attachment" "lambda-basic-execution" {
-//  role = "${aws_iam_role.lambda.id}"
-//  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
-//}
-//
+resource "aws_iam_role_policy_attachment" "lambda-basic-execution" {
+  role = "${aws_iam_role.lambda.id}"
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+}
+
 //resource "aws_iam_role_policy_attachment" "lambda-kinesis-execution" {
 //  role = "${aws_iam_role.lambda.id}"
 //  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaKinesisExecutionRole"
 //}
-//
-//resource "aws_iam_role" "lambda" {
-//  assume_role_policy = "${data.aws_iam_policy_document.lambda-role-policy.json}"
-//  tags = "${local.tags}"
-//}
-//
+
+resource "aws_iam_role" "lambda" {
+  assume_role_policy = "${data.aws_iam_policy_document.lambda-role-policy.json}"
+  tags = "${local.tags}"
+}
+
 //resource "aws_lambda_event_source_mapping" "data-source" {
 //  event_source_arn = "${var.kinesis-stream-arn}"
 //  function_name = "${aws_lambda_function.event-adapter.arn}"
